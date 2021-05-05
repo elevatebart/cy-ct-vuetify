@@ -23,19 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { mount as cyMount } from "@cypress/vue";
+import { mount } from "@cypress/vue";
 import vuetify from "../../src/plugins/vuetify";
 
 Cypress.Commands.add("mount", (MountedComponent, options) => {
-  return cyMount(
-    {
-      vuetify,
-      render(createElement) {
-        return createElement("v-app", [createElement(MountedComponent)]);
-      },
-    },
-    {
-      ...options, // To override values for specific tests
-    }
-  );
+  const root = document.getElementById("__cy_root");
+  // Vuetify styling
+  if (!root.classList.contains("v-application")) {
+    root.classList.add("v-application");
+  }
+
+  return mount(MountedComponent, {
+    vuetify,
+    ...options, // To override values for specific tests
+  });
 });
