@@ -32,6 +32,8 @@ Cypress.Commands.add("mount", (MountedComponent, options) => {
   if (!root.classList.contains("v-application")) {
     root.classList.add("v-application");
   }
+  // Vuetify selector used for popup elements to attach to the DOM
+  root.setAttribute('data-app', 'true');
 
   return mount(MountedComponent, {
     vuetify,
